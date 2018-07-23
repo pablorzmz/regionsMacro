@@ -23,7 +23,7 @@ int fO = 0;
 #endif
 
 
-#define numHilos 100
+#define numHilos 200
 sem_t consola;
 pthread_t hiloNuevo[numHilos];
 void printControlled( std::string msg );
@@ -88,8 +88,9 @@ void esperarHilos()
 #ifdef AGUA
     void* O(void* id)
     {
-        cout<<("O:: Oxigenos= " + to_string(nO) + " Hidrógenos= " + to_string(nH) + "\n");
-        REGION ( regionS,0,nO )
+        std::string title = "O:: Oxigenos= " + to_string(nO) + " Hidrógenos= " + to_string(nH) + "\n";
+        printControlled(title);
+        REGION ( regionS,0,nH,nO,fH,fO )
         DO ( regionS,0,
             nO++;
            )
@@ -118,14 +119,15 @@ void esperarHilos()
 
     void* H( void* id )
     {
-        cout<<("H:: Oxigenos= " + to_string(nO) + " Hidrógenos= " + to_string(nH) + "\n");
-        REGION ( regionS,2,nH )
+        std::string title = "O:: Oxigenos= " + to_string(nO) + " Hidrógenos= " + to_string(nH) + "\n";
+        printControlled(title);
+        REGION ( regionS,2,nH,nO,fH,fO )
         DO ( regionS,2,
             nH++;
            )
 
-        REGION ( regionS,3,nH,nO,fH,fO) WHEN (regionS,3, (fH > 0) || (nO > 0 && nH > 1) )
-        DO ( regionS,3,
+        REGION ( regionS,1,nH,nO,fH,fO) WHEN (regionS,1, (fH > 0) || (nO > 0 && nH > 1) )
+        DO ( regionS,1,
              if( fH > 0 )
                {
                  fH--;

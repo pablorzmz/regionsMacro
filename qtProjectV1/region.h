@@ -117,8 +117,6 @@ struct sharedValues
                     if ( vector##_##regionName##_##spaceNumber[y] == myValues##_##regionName[x].name )\
                         {\
                             sem_wait(&(myValues##_##regionName[x].sem));\
-                            y = vector##_##regionName##_##spaceNumber.size();\
-                            x = maxV##_##regionName;\
                         }\
                 }\
           }\

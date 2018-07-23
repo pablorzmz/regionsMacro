@@ -9,9 +9,9 @@ int nO = 0;
 int fH = 0;
 int fO = 0;
 
-//#define CHANCHO
+#define CHANCHO
 #define regionR
-#define AGUA
+//#define AGUA
 #define regionS
 
 #ifdef CHANCHO
@@ -88,13 +88,12 @@ void esperarHilos()
 
 #ifdef AGUA
     void* O(void* id)
-    {
-        cout<<("O:: Oxigenos= " + to_string(nO) + " Hidrógenos= " + to_string(nH) + "\n");
+    {        
         REGION ( regionS,0 )
         DO ( regionS,0,
             nO++;
            )
-
+        cout<<("O:: Oxigenos= " + to_string(nO) + " Hidrógenos= " + to_string(nH) + "\n");
         REGION ( regionS,1 ) WHEN ( regionS,1, fO > 0 || (nO > 0 && nH > 1) )
         DO (regionS,1,
            if ( fO > 0)
@@ -118,13 +117,12 @@ void esperarHilos()
     }
 
     void* H( void* id )
-    {
-        cout<<("H:: Oxigenos= " + to_string(nO) + " Hidrógenos= " + to_string(nH) + "\n");
-        REGION ( regionS,2 )
+    {        
+        REGION ( regionS,2)
         DO ( regionS,2,
             nH++;
            )
-
+        cout<<("H:: Oxigenos= " + to_string(nO) + " Hidrógenos= " + to_string(nH) + "\n");
         REGION ( regionS,1 ) WHEN (regionS,1, fH > 0 || (nO > 0 && nH > 1) )
         DO ( regionS,1,
              if( fH > 0 )
@@ -132,7 +130,7 @@ void esperarHilos()
                  fH--;
                }
                else
-               {
+               {                 
                  std::string msg = "\tOxigenos= " + to_string(nO) + " Hidrógenos= " + to_string(nH) + "\n";
                  msg += "\tSoy el hidrógeno n°: ";
                  msg += to_string((long)id);
@@ -213,6 +211,8 @@ pthread_attr_setdetachstate( &at,PTHREAD_CREATE_JOINABLE );
 
     pthread_attr_destroy( &at );
     //esperarHilos();
+
+
 
 #endif
 

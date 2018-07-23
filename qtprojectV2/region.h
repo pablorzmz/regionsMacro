@@ -37,8 +37,8 @@ struct sharedValues
             pthread_mutex_destroy( &maxSpacesForRegion##_##regionName[ index ] );\
         };\
     for ( size_t index2 = 0; index2 < maxR##_##regionName; ++ index2 )\
-        {\
-            sem_destroy( &semsPerRegion##_##regionName[ index2 ].sem );\
+        { \
+            sem_destroy( &semsPerRegion##_##regionName[ index2 ].sem ); \
         };\
 
 
